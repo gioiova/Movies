@@ -9,9 +9,15 @@ interface MovieCardProps {
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
+  const router = useRouter();
+  
   const imageUrl = movie.poster_path 
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : '/api/placeholder/500/750';
+
+  const handleViewDetails = () => {
+    router.push(`/movie/${movie.id}`);
+  };
 
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
@@ -32,7 +38,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           </div>
         </div>
         <button 
-          onClick={() => {/* TODO: Implement view details */}}
+          onClick={handleViewDetails}
           className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition-colors"
         >
           View Details

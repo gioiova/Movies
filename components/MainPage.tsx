@@ -7,8 +7,7 @@ const MainPage = () => {
         <Header />
         <main>
           <Banner />
-          {/* Movie grid will go here later */}
-        </main>
+           </main>
       </div>
     );
   };

@@ -4,10 +4,13 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 export interface Movie {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
   release_date: string;
   vote_average: number;
+  overview: string;
+  genres: { id: number; name: string }[]; 
 }
+
 
 export const movieService = {
   async getMovies(page: number = 1) {

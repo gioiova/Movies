@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateUser } from "@/utils/auth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({ 
@@ -11,6 +12,7 @@ export default function SignUpForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,27 +22,27 @@ export default function SignUpForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    const { username, password, } = formData;
+    const { username, password } = formData;
 
     // Validate inputs
-    if (!username ||  !password  ) {
+    if (!username || !password) {
       setErrorMessage("All fields are required.");
       setIsLoading(false);
       return;
     }
-
-  
 
     try {
       // Validate user
       const isValidUser = validateUser(username, password);
       if (isValidUser) {
         setErrorMessage("");
+        login(username); // Add this line to set the authentication state
         router.push("/");
       } else {
         setErrorMessage("Invalid username or password.");
       }
     } catch (error) {
+      console.error('Login error:', error);
       setErrorMessage("An error occurred during signup.");
     } finally {
       setIsLoading(false);
@@ -85,8 +87,6 @@ export default function SignUpForm() {
             </div>
           </div>
 
-      
-
           {/* Password field */}
           <div>
             <label htmlFor="password" className="block text-gray-300 text-sm font-medium mb-2">
@@ -105,7 +105,6 @@ export default function SignUpForm() {
             </div>
           </div>
 
-
           {/* Submit button */}
           <button
             type="submit"
@@ -113,12 +112,9 @@ export default function SignUpForm() {
             className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors disabled:bg-red-800 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             <span>{isLoading ? "Creating Account..." : "Sign Up"}</span>
-            
           </button>
-
-       
         </form>
       </div>
     </div>
   );
-};
+}

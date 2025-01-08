@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import MovieGrid from '@/components/MovieGrid';
 import { movieService, Movie } from '@/services/MovieService';
+import ProtectedRoute from '@/components/ProdectedRoute';
 
 export default function HomePage() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -46,8 +47,8 @@ export default function HomePage() {
   };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-900">
-      <Header />
       <main className="pt-16">
         <MovieGrid 
           movies={movies}
@@ -57,5 +58,6 @@ export default function HomePage() {
         />
       </main>
     </div>
+    </ProtectedRoute>
   );
 }
