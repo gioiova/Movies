@@ -8,7 +8,7 @@ const Header = () => {
       <header className="fixed top-0 w-full bg-black bg-opacity-90 text-white z-50">
         <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-8">
-            <h1 className="text-2xl font-bold text-red-600">MovieList</h1>
+            <a href='/' className="text-2xl font-bold text-red-600">MovieList</a>
             <div className="hidden md:flex space-x-6">
               <a href="/" className="hover:text-red-600 transition-colors">Home</a>
               <a href="/favorites" className="hover:text-red-600 transition-colors">Favorites</a>

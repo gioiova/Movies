@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import MovieGrid from '@/components/MovieGrid';
 import { movieService, Movie } from '@/services/MovieService';
@@ -11,8 +11,7 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const searchQuery = searchParams.get('search') || '';
+  const searchQuery = searchParams.get('search') || ''; 
 
   const loadMovies = async (page: number, search?: string) => {
     setIsLoading(true);
@@ -20,13 +19,13 @@ export default function HomePage() {
       const data = search 
         ? await movieService.searchMovies(search, page)
         : await movieService.getMovies(page);
-      
+
       if (page === 1) {
         setMovies(data.results);
       } else {
-        setMovies(prev => [...prev, ...data.results]);
+        setMovies((prev) => [...prev, ...data.results]);
       }
-      
+
       setHasMore(data.page < data.total_pages);
     } catch (error) {
       console.error('Error loading movies:', error);
@@ -37,8 +36,8 @@ export default function HomePage() {
 
   useEffect(() => {
     setCurrentPage(1);
-    loadMovies(1, searchQuery);
-  }, [searchQuery]);
+    loadMovies(1, searchQuery); 
+  }, [searchQuery]); 
 
   const handleLoadMore = () => {
     const nextPage = currentPage + 1;
