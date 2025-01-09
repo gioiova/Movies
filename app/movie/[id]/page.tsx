@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image"; // Import the Image component
 import { use } from "react";
 import { Movie } from "@/services/MovieService";
 import { Star, Heart } from "lucide-react";
@@ -33,7 +34,7 @@ export default function MovieDetailsPage({ params }: { params: Promise<{ id: str
 
   const handleFavoriteClick = () => {
     if (!movie) return;
-    
+
     if (isFavorite(movie.id)) {
       removeFromFavorites(movie.id);
     } else {
@@ -66,10 +67,12 @@ export default function MovieDetailsPage({ params }: { params: Promise<{ id: str
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-2 gap-12 justify-items-center">
           <div className="relative">
-            <img
+            <Image
               src={imageUrl}
               alt={movie.title}
               className="rounded-lg w-full object-cover shadow-xl transition-transform transform hover:scale-105 max-w-[400px] mx-auto"
+              width={400} // Set explicit width
+              height={600} // Set explicit height
             />
             <button
               onClick={handleFavoriteClick}

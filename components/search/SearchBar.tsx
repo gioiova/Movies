@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { movieService, Movie } from '@/services/MovieService';
+import { movieService } from '@/services/MovieService';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,7 +32,7 @@ const SearchBar = () => {
       // Always update the URL to reflect the search
       router.push(`/?search=${encodeURIComponent(searchQuery)}`);
       
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);

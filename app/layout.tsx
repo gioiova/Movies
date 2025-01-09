@@ -4,12 +4,13 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import Header from "@/components/layout/Header";
 import { FavoritesProvider } from "@/context/FavoritesContext";
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],

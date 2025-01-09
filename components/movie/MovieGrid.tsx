@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import React from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import Image from 'next/image';  // Import Image component from next/image
+import { useRouter } from 'next/navigation';
 import { Movie } from '@/services/MovieService';
 import { Star, Heart } from 'lucide-react';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -33,10 +34,14 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
       <div className="relative">
-        <img 
+        {/* Replace img with Image component */}
+        <Image 
           src={imageUrl} 
           alt={movie.title}
+          width={500} // You can adjust the width and height as needed
+          height={750}
           className="w-full h-96 object-cover"
+          layout="responsive"  // This helps with responsive images
         />
         <button
           onClick={handleFavoriteClick}
@@ -44,11 +49,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           aria-label={isFavorite(movie.id) ? "Remove from favorites" : "Add to favorites"}
         >
           <Heart
-            className={`w-6 h-6 ${
-              isFavorite(movie.id) 
-                ? 'text-red-500 fill-current' 
-                : 'text-white'
-            }`}
+            className={`w-6 h-6 ${isFavorite(movie.id) ? 'text-red-500 fill-current' : 'text-white'}`}
           />
         </button>
       </div>
