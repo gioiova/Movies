@@ -2,7 +2,8 @@
 import React from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Movie } from '@/services/MovieService';
-import { Star } from 'lucide-react';
+import { Star, Heart } from 'lucide-react';
+import { useFavorites } from '@/context/FavoritesContext';
 
 interface MovieCardProps {
   movie: Movie;
@@ -10,6 +11,7 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie }: MovieCardProps) => {
   const router = useRouter();
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   
   const imageUrl = movie.poster_path 
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -19,13 +21,37 @@ const MovieCard = ({ movie }: MovieCardProps) => {
     router.push(`/movie/${movie.id}`);
   };
 
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isFavorite(movie.id)) {
+      removeFromFavorites(movie.id);
+    } else {
+      addToFavorites(movie);
+    }
+  };
+
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
-      <img 
-        src={imageUrl} 
-        alt={movie.title}
-        className="w-full h-96 object-cover"
-      />
+      <div className="relative">
+        <img 
+          src={imageUrl} 
+          alt={movie.title}
+          className="w-full h-96 object-cover"
+        />
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 p-2 rounded-full bg-gray-900 bg-opacity-50 hover:bg-opacity-75 transition-colors"
+          aria-label={isFavorite(movie.id) ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart
+            className={`w-6 h-6 ${
+              isFavorite(movie.id) 
+                ? 'text-red-500 fill-current' 
+                : 'text-white'
+            }`}
+          />
+        </button>
+      </div>
       <div className="p-4">
         <h3 className="text-white font-semibold text-lg truncate">{movie.title}</h3>
         <div className="flex justify-between items-center mt-2">
@@ -37,12 +63,24 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             <span className="text-white">{movie.vote_average.toFixed(1)}</span>
           </div>
         </div>
-        <button 
-          onClick={handleViewDetails}
-          className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition-colors"
-        >
-          View Details
-        </button>
+        <div className="flex gap-2 mt-4">
+          <button 
+            onClick={handleViewDetails}
+            className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            View Details
+          </button>
+          <button
+            onClick={handleFavoriteClick}
+            className={`flex items-center justify-center px-4 rounded transition-colors ${
+              isFavorite(movie.id)
+                ? 'bg-red-600 text-white hover:bg-red-700'
+                : 'bg-gray-700 text-white hover:bg-gray-600'
+            }`}
+          >
+            <Heart className={`w-5 h-5 ${isFavorite(movie.id) ? 'fill-current' : ''}`} />
+          </button>
+        </div>
       </div>
     </div>
   );
