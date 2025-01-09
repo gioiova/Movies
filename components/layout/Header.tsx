@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { Search, Heart, User, LogOut } from 'lucide-react';
-import SearchBar from './SearchBar';
+import SearchBar from '../search/SearchBar';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 

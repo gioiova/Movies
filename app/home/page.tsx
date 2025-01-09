@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Header from '@/components/Header';
-import MovieGrid from '@/components/MovieGrid';
+import Header from '@/components/layout/Header';
+import MovieGrid from '@/components/movie/MovieGrid';
 import { movieService, Movie } from '@/services/MovieService';
-import ProtectedRoute from '@/components/ProdectedRoute';
+import ProtectedRoute from '@/components/layout/ProdectedRoute';
 
 export default function HomePage() {
   const [movies, setMovies] = useState<Movie[]>([]);

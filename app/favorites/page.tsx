@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { useFavorites } from '@/context/FavoritesContext';
-import MovieGrid from '@/components/MovieGrid';
+import MovieGrid from '@/components/movie/MovieGrid';
 
 const FavoritesPage = () => {
   const { favorites } = useFavorites();
